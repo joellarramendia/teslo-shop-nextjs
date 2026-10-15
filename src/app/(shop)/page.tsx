@@ -1,10 +1,11 @@
-import Image from "next/image";
+import { titleFont } from "@/src/config/fonts";
 
 export default function Home() {
   return (
     <>
     <div>
       <h1>Hola mundo</h1>
+      <h1 className={titleFont.className}>Hola Mundo</h1>
     </div>
     </>
   );
