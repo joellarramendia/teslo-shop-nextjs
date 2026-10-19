@@ -2,7 +2,7 @@
 
 import { PageNotFound } from "@/src/components";
 
-export default function () {
+export default function GenderErrorPage() {
   return (
     <PageNotFound/>
   );

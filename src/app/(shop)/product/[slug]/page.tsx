@@ -8,7 +8,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export default async function ({ params }: Props) {
+export default async function ProductBySlugPage({ params }: Props) {
 
   const { slug } = await params
   const product = initialData.products.find(product => product.slug === slug)
