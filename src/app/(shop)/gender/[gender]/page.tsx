@@ -1,7 +1,8 @@
+export const revalidate = 60 //60 segundos
+
 import { getPaginatedProductsWithImages } from "@/src/actions";
 import { Gender } from "@/src/app/generated/prisma/enums";
 import { Pagination, ProductGrid, Title } from "@/src/components";
-import { Category } from "@/src/interfaces";
 import { redirect } from "next/navigation";
 
 
@@ -38,9 +39,7 @@ export default async function ({ params, searchParams }: Props) {
     'unisex': 'para todos'
   }
 
-  // if (id === 'kids') {
-  //   notFound()
-  // }
+
 
   return (
     <>
