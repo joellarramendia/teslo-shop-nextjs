@@ -3,4 +3,7 @@
 2. Crear una copia del archivo ```.env.template``` y renombrarlo a ```.env``` y cambiar las variables de entorno
 3. Instalar dependencias ```pnpm install```
 4. Levantar la base de datos ```docker compose up -d ```
-5. Correr el proyecto ```pnpm dev```
+5. Correr las migraciones de Prisma ```pnpm prisma migrate dev```
+6. Generar el cliente de Prisma ```pnpm prisma generate```
+7. Ejecutar seed ```pnpm seed```
+8. Correr el proyecto ```pnpm dev```
