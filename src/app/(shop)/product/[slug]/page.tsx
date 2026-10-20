@@ -1,17 +1,41 @@
+export const revalidate = 604800 //7 dias
+
+
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
-import { initialData } from "@/src/seed/seed";
 import { titleFont } from "@/src/config/fonts";
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector } from "@/src/components";
+import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel } from "@/src/components";
+import { getProducBySlug } from "@/src/actions";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slug = (await params).slug
+
+  const product = await getProducBySlug(slug)
+  return {
+    title: product?.title ?? 'Producto no encontrado',
+    description: product?.description ?? '',
+    openGraph: {
+      title: product?.title ?? 'Producto no encontrado',
+      description: product?.description ?? '',
+      images: [`/products/${product?.images[1]}`]
+    }
+  }
+}
+
+
 export default async function ProductBySlugPage({ params }: Props) {
 
   const { slug } = await params
-  const product = initialData.products.find(product => product.slug === slug)
+  const product = await getProducBySlug(slug)
 
   if (!product) {
     notFound()
@@ -22,7 +46,7 @@ export default async function ProductBySlugPage({ params }: Props) {
       {/* SlidesShow */}
       <div className=" col-span-1 md:col-span-2">
         {/* Mobile SlidesShow */}
-        <ProductMobileSlideshow title={product.title} images={product.images} className="block md:hidden"/>
+        <ProductMobileSlideshow title={product.title} images={product.images} className="block md:hidden" />
 
         {/* Desktop SlidesShow */}
         <ProductSlideshow title={product.title} images={product.images} className="hidden md:block" />
@@ -30,6 +54,9 @@ export default async function ProductBySlugPage({ params }: Props) {
 
       {/* Detalles */}
       <div className=" col-span-1 px-5">
+
+        <StockLabel slug={product.slug} />
+
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
