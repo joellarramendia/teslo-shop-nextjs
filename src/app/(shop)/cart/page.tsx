@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { Title } from "@/src/components";
 import { ProductsInCart } from "./ui/ProductsInCart";
+import { OrderSummary } from "./ui/OrderSummary";
 
 
 
@@ -31,20 +32,7 @@ export default function CartPage() {
           {/* Checkout - Resumen de orden */}
           <div className=" bg-gray-100 rounded-xl shadow-xl p-7 h-fit">
             <h2 className="text-2xl mb-2">Resumen de orden</h2>
-            <div className="grid grid-cols-2">
-              <span>No. Productos</span>
-              <span className=" text-right">4 articulos</span>
-
-              <span>Subtotal</span>
-              <span className=" text-right">$ 100</span>
-
-              <span>Impuestos (10%)</span>
-              <span className=" text-right">$ 100</span>
-
-              <span className="text-2xl mt-5">Total:</span>
-              <span className=" text-right mt-5 text-2xl">$ 100</span>
-            </div>
-
+            <OrderSummary />
             <div className="mt-5 mb-2 w-full">
               <Link className="flex btn-primary justify-center" href="/checkout/address">
                 Checkout
