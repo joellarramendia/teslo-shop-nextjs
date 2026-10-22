@@ -13,3 +13,6 @@ export * from './product/quantity-selector/QuantitySelector'
 export * from './product/slideShow/ProductSlideshow'
 export * from './product/slideShow/ProductMobileSlideshow'
 export * from './product/stock-label/StockLabel'
+
+export * from './provider/Provider'
+
