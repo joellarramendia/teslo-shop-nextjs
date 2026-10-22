@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 
 import { authenticate } from "@/src/actions"
+import { IoInformationOutline } from "react-icons/io5";
+import clsx from "clsx";
 
 export const LoginForm = () => {
 
@@ -34,11 +36,27 @@ export const LoginForm = () => {
                 name="password"
             />
 
-            <button
+            {errorMessage && (
+                <div className=" flex flex-row mb-2">
+                    <IoInformationOutline className="h-5 w-5 text-red-500" />
+                    <p className="text-sm text-red-500">Credenciales no son correctas</p>
+                </div>
+            )}
+
+            {/* <button
                 type="submit"
                 className="btn-primary">
                 Ingresar
+            </button> */}
+
+            <input type="hidden" name="redirectTo" value={callbackUrl} />
+            <button className={clsx({
+                "btn-primary": !isPending,
+                "btn-disabled": isPending
+            })} disabled={isPending}>
+                Ingresar
             </button>
+
 
 
             {/* divisor l ine */}
@@ -57,3 +75,5 @@ export const LoginForm = () => {
         </form>
     )
 }
+
+
