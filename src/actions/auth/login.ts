@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn } from '@/src/auth.config';
+import { sleep } from '@/src/utils';
 import { AuthError } from 'next-auth';
 
 // ...
@@ -10,7 +11,7 @@ export async function authenticate(
     formData: FormData,
 ) {
     try {
-        console.log(Object.fromEntries(formData))
+        // await sleep(2)
         await signIn('credentials', formData);
     } catch (error) {
         // if (error instanceof AuthError) {
