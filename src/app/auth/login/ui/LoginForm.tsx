@@ -1,22 +1,29 @@
 'use client'
 
 import Link from "next/link"
-import { useSearchParams } from "next/navigation";
-import { useActionState } from "react";
-
-import { authenticate } from "@/src/actions"
+import { useRouter, useSearchParams } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import { IoInformationOutline } from "react-icons/io5";
 import clsx from "clsx";
 
+import { authenticate } from "@/src/actions"
+
 export const LoginForm = () => {
 
+    // const router = useRouter()
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined,
     );
-    console.log({ formAction })
+    
+    useEffect(() => {
+        if(errorMessage === 'Success') {
+            // router.replace('/')
+            window.location.replace('/')
+        }
+    }, [errorMessage])
 
     return (
         <form action={formAction} className="flex flex-col">
@@ -36,20 +43,15 @@ export const LoginForm = () => {
                 name="password"
             />
 
-            {errorMessage && (
+            {errorMessage === "Invalid credentials." && (
                 <div className=" flex flex-row mb-2">
                     <IoInformationOutline className="h-5 w-5 text-red-500" />
                     <p className="text-sm text-red-500">Credenciales no son correctas</p>
                 </div>
             )}
 
-            {/* <button
-                type="submit"
-                className="btn-primary">
-                Ingresar
-            </button> */}
 
-            <input type="hidden" name="redirectTo" value={callbackUrl} />
+            {/* <input type="hidden" name="redirectTo" value={callbackUrl} /> */}
             <button className={clsx({
                 "btn-primary": !isPending,
                 "btn-disabled": isPending
