@@ -5,12 +5,13 @@ import { IoCloseOutline, IoLogInOutline, IoPeopleOutline, IoPersonOutline, IoSea
 import clsx from "clsx"
 
 import { useUIStore } from "@/src/store"
+import { logout } from "@/src/actions"
 
 export const Sidebar = () => {
 
     const isSideMenuOpen = useUIStore(state => state.isSideMenuOpen)
     const closeMenu = useUIStore(state => state.closeSideMenu)
-    
+
 
 
     return (
@@ -57,7 +58,8 @@ export const Sidebar = () => {
 
                 {/* Menu */}
                 <Link
-                    href="/"
+                    href="/profile"
+                    onClick={() => closeMenu()}
                     className=" flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
                 >
                     <IoPersonOutline size={30} />
@@ -80,13 +82,13 @@ export const Sidebar = () => {
                     <span className="ml-3 text-xl">Ingresar</span>
                 </Link>
 
-                <Link
-                    href="/"
-                    className=" flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+                <button
+                    onClick={() => logout()}
+                    className=" flex items-center w-full cursor-pointer mt-10 p-2 hover:bg-gray-100 rounded transition-all"
                 >
                     <IoLogInOutline size={30} />
                     <span className="ml-3 text-xl">Salir</span>
-                </Link>
+                </button>
 
 
                 {/* Line separetor */}
