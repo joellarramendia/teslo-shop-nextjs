@@ -74,7 +74,7 @@ model User {
   password      String
   role          Role      @default(user)
   image         String?
-  
+
   address UserAddress?
 }
 
@@ -92,11 +92,12 @@ model UserAddress {
   address2   String?
   postalCode String
   phone      String
+  city       String
 
   // Relaciones
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
 
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
   userId String @unique
 }
