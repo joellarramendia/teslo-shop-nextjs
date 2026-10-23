@@ -12,12 +12,25 @@ export const authConfig: NextAuthConfig = {
   },
 
   callbacks: {
-    jwt({token, user}) {
-      if(user) token.data = user
+    authorized({ auth, request: { nextUrl } }) {
+      console.log({auth})
+      // const isLoggedIn = !!auth?.user
+      // const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
+      // if (isOnDashboard) {
+      //   if (isLoggedIn) return true
+      //   return false
+      // } else if (isLoggedIn) {
+      //   return true //Response.redirect(new URL('/dashboard', nextUrl))
+      // }
+      return true
+    },
+
+    jwt({ token, user }) {
+      if (user) token.data = user
       return token
     },
 
-    session({session, token, user}) {
+    session({ session, token, user }) {
       session.user = token.data as any
       return session
     }
