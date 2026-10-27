@@ -1,20 +1,27 @@
 'use client'
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { useShallow } from "zustand/shallow"
 import clsx from "clsx"
 
 import { useAddressStore, useCartStore } from "@/src/store"
 import { currencyFormat } from "@/src/utils"
+import { placeOrder } from "@/src/actions"
 
 export const PlaceOrder = () => {
 
+    const router = useRouter()
+
     const [loaded, setLoaded] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
     const address = useAddressStore(state => state.address)
     const { itemsInCart, subTotal, tax, total } = useCartStore(useShallow((state) => state.getSummaryInformation()))
     const cart = useCartStore(state => state.cart)
+    const clearCart = useCartStore(state => state.clearCart)
+
 
 
     useEffect(() => {
@@ -30,7 +37,17 @@ export const PlaceOrder = () => {
             size: product.size
         }))
 
-        console.log({address, productsToOrder})
+        // ! Server Action
+        const resp = await placeOrder(productsToOrder, address)
+        if(!resp.ok){
+            setIsPlacingOrder(false)
+            setErrorMessage(resp.message)
+            return
+        }
+
+        //* Todo salio bien!
+        clearCart()
+        router.replace('/orders/' + resp.order?.id)
 
         setIsPlacingOrder(false)
     }
@@ -76,7 +93,7 @@ export const PlaceOrder = () => {
                     </span>
                 </p>
 
-                {/* <p className=" text-red-500">Error de creación</p> */}
+                <p className=" text-red-500">{errorMessage}</p>
 
                 <button 
                 onClick={onPlaceOrder} 
