@@ -5,5 +5,6 @@
 4. Levantar la base de datos ```docker compose up -d ```
 5. Correr las migraciones de Prisma ```pnpm prisma migrate dev```
 6. Generar el cliente de Prisma ```pnpm prisma generate```
-7. Ejecutar seed ```pnpm seed```
-8. Correr el proyecto ```pnpm dev```
+7. Limpiar el localStorage del navegador
+8. Ejecutar seed ```pnpm seed```
+9. Correr el proyecto ```pnpm dev```
